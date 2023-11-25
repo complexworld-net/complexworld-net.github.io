@@ -183,7 +183,7 @@ Try to make a diagram that relates density, dimension and probability of having 
 
 ## RELATED MODELS
 
-After practicing, try "Forest fire with gradient" https://www.caffescienza.it/
+After practicing, try "Forest fire with gradient" https://didattica.complexworld.net
 
 ## CREDITS AND REFERENCES
 

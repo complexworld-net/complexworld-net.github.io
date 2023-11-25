@@ -118,7 +118,6 @@ to upload
   let lnk "https://docs.google.com/forms/d/e/1FAIpQLSc3Wx68IGPL5qoY5rCc6w3V8aB0g2gLx7lEaIWNNqIqB8B3xA/formResponse?"
 
   let ll reduce [[x y] -> (word x "&" y)] map [a -> reduce [[q w] -> (word q "=" w)] a] args
-  show (word lnk ll)
   if not submitted? [
     fetch:url-async (word lnk ll) [->]
     set submitted? true
@@ -128,8 +127,8 @@ end
 GRAPHICS-WINDOW
 26
 207
-765
-947
+766
+948
 -1
 -1
 12.0
@@ -204,10 +203,10 @@ NIL
 1
 
 TEXTBOX
-37
-13
-749
-133
+35
+10
+747
+130
 Funzionamento del gioco: \n\n1) Inserire un identificativo qualsiasi \n2) Premere \"setup\"\n3) Osservare la disposizione degli alberi, loro grandezza e densità.\n3) Cliccare su \"place-circle\" e posizionare il cerchio giallo, il cui raggio può essere cambiato con \"radius\" cercando di prevedere il limite raggiunto dal fuoco, che inizierà dall'albero rosso al centro.\n4) Cliccare su \"go\" e vedere se la previsione è confermata.
 12
 0.0
@@ -242,39 +241,26 @@ String
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+Prediction of the psreading of a fire.  
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+Tres are grown with a density that diminishes along the y direction, starting from the center. Their size diminishes along the x direction, again starting from the center. 
+The goal is that of predicting the "average square radius" os a fire starting from the center.
+
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Inser an ID, thaen press Setup. Trees are grown. Place a circle trying to predict the position and (average squared" radius of the fire.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
+This gae is a verification of the knowledge acquired with "forest fire with probability" https://didattica.complexworld.net
 
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
-
-## EXTENDING THE MODEL
-
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
-
-## NETLOGO FEATURES
-
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
-
-## RELATED MODELS
-
-(models in the NetLogo Models Library and elsewhere which are of related interest)
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+Franco Bagnoli and Alessio Focardi 2023 
 @#$#@#$#@
 default
 true
