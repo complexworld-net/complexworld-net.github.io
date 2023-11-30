@@ -22,7 +22,7 @@ to setup
     user-message "Inserire un id."
   ][
     init
-    user-message "Premere 'trace' e scegliere il punto di inizio. Regolare la sbarra della velocità in alto in modo che le traiettorie scorrano velocemente."
+    user-message "Premere 'trace' e scegliere il punto di inizio. Regolare la sbarra della velocità verso il massimo (se su browser) in alto in modo che le traiettorie vengano tracciate velocemente."
   ]
 end
 
@@ -48,6 +48,7 @@ to init
     set size 1
     set color white
     set state (list xcor ycor 0 0);
+    set hidden? true
   ]
   create-spots 1 [
     set shape "circle"
@@ -67,6 +68,7 @@ to init
   (foreach  sort patches ms [[a b] -> ask a [set MAXS b]])
   set trials 0
   set answered? false
+  tick
 end
 
 
@@ -77,7 +79,7 @@ end
 
 to spot-the-chaos
   ask one-of spots [
-    set hidden? false
+    set hidden? true
     setxy mouse-xcor mouse-ycor
   ]
   if mouse-down? [
@@ -115,10 +117,13 @@ end
 
 
 to place-bob
+   ask bobs [
+      set hidden? false
+      setxy mouse-xcor mouse-ycor
+  ]
   if mouse-down? [
     clear-drawing
     ask bobs [
-      setxy mouse-xcor mouse-ycor
       set state (list xcor ycor 0 0)
       set ipatch patch-here
     ]
@@ -687,7 +692,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
