@@ -2,17 +2,34 @@ breed [cannons cannon]
 breed [bullets bullet]
 breed [boxes box]
 
+extensions [fetch]
 
-globals [segments w trials]
+
+globals [segments w trials answered? responses]
 ; segments are [p0 p1 type]
 ; where pi = [xi yi]
 ; and type: left top right bottom
 ;   <0: boundary
 ;   > 0: bounce on box
 
+to startup
+  user-message "Inserire un id, quindi premere 'setup'."
+  set answered? false
+end
+
 to setup
+  ifelse id = "" [
+    user-message "Inserire un id."
+  ][
+    init
+    user-message "Ruotare (eventualmente) i quadrati e sparare tentando di massimizzare la distanza tra i punti finali delle traiettorie dei colpi."
+  ]
+end
+
+to init
   ca
   set trials 0
+  reset-ticks
   create-boxes 6 [
     set shape "rotsquare"
     set color green
@@ -43,6 +60,8 @@ to setup
     fd world-width - 1
     die
   ]
+  set responses []
+  set answered? false
 end
 
 to set-segments
@@ -95,7 +114,6 @@ to rotate-squares
     ]
     if mouse-down? [
       set-segments
-      reset-ticks
       stop
     ]
   ]
@@ -137,8 +155,31 @@ to fire
       let d sqrt(reduce + (map [[a b] -> (a - b) ^ 2] item 0 w item 1 w))
       set trials trials + 1
       output-print (word "tentativo n. " trials ": distanza = " precision d 2)
+      set responses lput (precision d 2) responses
+      if trials = 3 [
+        record-answer
+      ]
       stop
     ]
+  ]
+end
+
+to record-answer
+  let args (list
+    ["submit" "Submit"]
+    ["usp" "pp_url"]
+    (list "entry.1571259630" id)
+    (list "entry.36176846" item 0 responses)
+    (list "entry.2125687222" item 1 responses)
+    (list "entry.731512679" item 2 responses)
+  )
+  ;https://docs.google.com/forms/d/e/1FAIpQLSeC2vGOSPpbxULi6l2BZdqBJmUyd_tAeKSvwW9wqrbXJY2cNQ/viewform?usp=pp_url&entry.1571259630=id&entry.36176846=111&entry.2125687222=222&entry.731512679=333
+  let lnk "https://docs.google.com/forms/d/e/1FAIpQLSeC2vGOSPpbxULi6l2BZdqBJmUyd_tAeKSvwW9wqrbXJY2cNQ/formResponse?"
+
+  let ll reduce [[x y] -> (word x "&" y)] map [a -> reduce [[z ww] -> (word z "=" ww)] a] args
+  if not answered? [
+    fetch:url-async (word lnk ll) [->]
+    set answered? true
   ]
 end
 
@@ -199,6 +240,7 @@ end
 
 
 
+
 ; given a segment defined by two point p1=[x1, y1] and p2 = [x2, y2]
 ; and a line defined by p0 = [x0, y0] and an angle alpha
 ; (i.e., a versor t = [tx, ty] = [sin(alpha), cos(alpha]) (in NetLogo)
@@ -236,13 +278,13 @@ to-report collision [alpha q0 s]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-32
-105
-854
-928
+47
+115
+741
+810
 -1
 -1
-15.83
+16.732
 1
 10
 1
@@ -263,37 +305,20 @@ ticks
 30.0
 
 TEXTBOX
-130
-15
-775
-62
+54
+14
+699
+33
 Ruotare i quadrati e quindi sparare (fire), cercando di massimizzare la distanza finale tra i proiettili
 11
 0.0
 1
 
 BUTTON
-150
+577
 49
-265
-91
-NIL
-setup
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-553
-47
-639
-93
+663
+95
 NIL
 fire
 T
@@ -306,18 +331,11 @@ NIL
 NIL
 0
 
-OUTPUT
-295
-945
-539
-1019
-12
-
 BUTTON
-325
-47
-467
-93
+427
+49
+569
+95
 NIL
 rotate-squares
 T
@@ -328,7 +346,42 @@ NIL
 NIL
 NIL
 NIL
+0
+
+BUTTON
+300
+50
+417
+94
+NIL
+setup
+NIL
 1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+INPUTBOX
+54
+40
+284
+100
+id
+NIL
+1
+0
+String
+
+OUTPUT
+673
+13
+955
+93
+13
 
 @#$#@#$#@
 ## WHAT IS IT?
