@@ -7,12 +7,18 @@ breed [trees tree]
 
 extensions [fetch]
 
+to startup
+  ca
+  user-message "Inserire un id e quindi premere 'setup'."
+end
+
+
 
 to setup
   ca
   set submitted? true
   ifelse id = "" [
-    user-message "Please insert an id"
+    user-message "Inserire un id"
   ][
     set radius 1
     ask patches [
@@ -42,6 +48,7 @@ to setup
       hide-turtle
     ]
     set submitted? false
+    user-message "Piazzare il cerchio e regolare il raggio in modo che copra l'area dove si prevede arrivi l'incendio. Quindi premere 'go'."
   ]
 end
 
@@ -152,10 +159,10 @@ ticks
 30.0
 
 BUTTON
-455
-145
-549
-196
+230
+160
+305
+195
 NIL
 setup
 NIL
@@ -169,10 +176,10 @@ NIL
 1
 
 BUTTON
-660
-965
-735
-1010
+700
+160
+760
+193
 NIL
 go
 T
@@ -186,10 +193,10 @@ NIL
 0
 
 BUTTON
-80
-965
-184
-998
+340
+160
+444
+193
 NIL
 place-circle
 T
@@ -213,25 +220,25 @@ Funzionamento del gioco: \n\n1) Inserire un identificativo qualsiasi \n2) Premer
 1
 
 SLIDER
-200
-965
-475
-998
+450
+160
+655
+193
 radius
 radius
 0
 max-pxcor
-1.0
+27.2
 .1
 1
 NIL
 HORIZONTAL
 
 INPUTBOX
+25
+140
 200
-142
-375
-202
+200
 id
 NIL
 1
