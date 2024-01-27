@@ -11,7 +11,7 @@ patches-own [status]
 to setup
   clear-all
   set n count patches / 100
-  set repetitions 10
+  set repetitions 2
 end
 
 to go
@@ -27,7 +27,7 @@ to go
     ]
     set sum-burned sum-burned / repetitions
     plotxy density sum-burned
-    set density density + 0.02
+    set density density + 0.05
   ]
 end
 
@@ -77,11 +77,11 @@ end
 GRAPHICS-WINDOW
 25
 228
-234
-438
+239
+443
 -1
 -1
-3.3
+3.02
 1
 10
 1
@@ -154,15 +154,15 @@ PENS
 "default" 1.0 0 -16777216 true "" ""
 
 SLIDER
-35
+37
 60
-225
+227
 93
 repetitions
 repetitions
 1
-20
-10.0
+8
+2.0
 1
 1
 NIL
@@ -177,7 +177,7 @@ density
 density
 0
 100
-0.27999999999999997
+1.0000000000000002
 1
 1
 NIL
