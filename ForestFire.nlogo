@@ -13,21 +13,22 @@ to setup
     set pcolor green
     set status 1
   ]
+  set initial-trees count patches with [status = 1]
+  set burned-trees 0
   restart
 end
 
 to restart
-  ask patches with [status > 0] [
-    set status 1
-    set pcolor green
-  ]
-  ask one-of patches [
+ ; clear-plot
+;  ask patches with [status > 0] [
+;    set status 1
+;    set pcolor green
+;  ]
+  ask one-of patches with [status = 1] [
     set status 3
     set pcolor red
   ]
   ;; set tree counts
-  set initial-trees count patches with [status = 1]
-  set burned-trees 0
   reset-ticks
 end
 
@@ -93,7 +94,7 @@ density
 density
 0.0
 1
-0.7
+0.58
 .01
 1
 %
