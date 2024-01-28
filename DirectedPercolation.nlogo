@@ -36,7 +36,7 @@ to go
 end
 
 to percolate
-  let probs (list P0 P1 P2)
+  let probs (list 0 P1 P2)
   ask current-row [
     if (pcolor = yellow) [
       let t count patches at-points [[-1 1] [1 1]] with [pcolor = red]
@@ -71,9 +71,9 @@ to wrap-oil
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-233
+255
 10
-541
+563
 461
 -1
 -1
@@ -133,21 +133,6 @@ NIL
 
 SLIDER
 18
-95
-209
-128
-P0
-P0
-0
-1
-0.0
-0.01
-1
-NIL
-HORIZONTAL
-
-SLIDER
-18
 138
 210
 171
@@ -155,7 +140,7 @@ P1
 P1
 0
 1
-0.76
+0.77
 .01
 1
 NIL
@@ -175,6 +160,36 @@ P2
 1
 NIL
 HORIZONTAL
+
+TEXTBOX
+32
+92
+182
+120
+probabilità di infezione con n vicini infetti
+11
+0.0
+1
+
+TEXTBOX
+236
+154
+260
+234
+t\ne\nm\np\no
+11
+0.0
+1
+
+TEXTBOX
+390
+468
+540
+486
+spazio
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -548,7 +563,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 setup
 repeat world-height - 1 [ go ]
