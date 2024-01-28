@@ -2,7 +2,7 @@ globals [
   infected    ;; how many have burned so far
 ]
 
-patches-own [status neigh]
+patches-own [status]
 
 
 to setup
@@ -11,11 +11,6 @@ to setup
   ask patches [
     set pcolor green
     set status 0  ; susceptible
-    ifelse four-neigh? [
-      set neigh neighbors4
-    ][
-      set neigh neighbors
-    ]
   ]
   ask n-of initial-infected patches [
     set status 1 ; infective
@@ -29,8 +24,14 @@ end
 to go
   if not any? patches with [status >= 1] [ stop ]
   ask patches with [status = 0][
-    if any? neigh with [status >= 1] and random-float 1 < infectivity [
-      set status 2  ; newly infected
+    ifelse four-neighbors? [
+      if any? neighbors4 with [status >= 1] and random-float 1 < tau [
+        set status 2  ; newly infected
+      ]
+    ][
+      if any? neighbors with [status >= 1] and random-float 1 < tau [
+        set status 2  ; newly infected
+      ]
     ]
   ]
   ask patches with [status = 1] [
@@ -76,8 +77,8 @@ SLIDER
 39
 197
 72
-infectivity
-infectivity
+tau
+tau
 0.0
 1
 0.5
@@ -147,7 +148,7 @@ initial-infected
 initial-infected
 1
 10
-8.0
+1.0
 1
 1
 NIL
@@ -158,8 +159,8 @@ SWITCH
 186
 181
 219
-four-neigh?
-four-neigh?
+four-neighbors?
+four-neighbors?
 1
 1
 -1000
@@ -538,7 +539,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 set density 60.0
 setup
@@ -552,13 +553,13 @@ repeat 180 [ go ]
     <metric>(count patches with [status = 2] / initial-trees)</metric>
     <steppedValueSet variable="density" first="0.5" step="0.01" last="0.7"/>
   </experiment>
-  <experiment name="experiment" repetitions="10" runMetricsEveryStep="false">
+  <experiment name="experiment (1)" repetitions="10" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>(count patches with [status = 1] / count patches)</metric>
     <steppedValueSet variable="infectivity" first="0.2" step="0.01" last="0.6"/>
   </experiment>
-  <experiment name="experiment" repetitions="10" runMetricsEveryStep="false">
+  <experiment name="experiment (2)" repetitions="10" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="300"/>
