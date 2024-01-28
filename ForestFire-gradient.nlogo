@@ -54,7 +54,7 @@ GRAPHICS-WINDOW
 22
 56
 832
-268
+267
 -1
 -1
 2.0
@@ -146,9 +146,9 @@ PLOT
 270
 832
 420
-percentuale alberi bruciati
-densità 
-percentuale
+Burned trees
+density 
+percent
 0.0
 1.0
 0.0

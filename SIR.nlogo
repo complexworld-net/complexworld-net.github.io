@@ -1,8 +1,8 @@
 globals [
-  infected    ;; how many have burned so far
+  infected
 ]
 
-patches-own [status neigh]
+patches-own [status]
 
 
 to setup
@@ -11,26 +11,32 @@ to setup
   ask patches [
     set pcolor green
     set status 0  ; susceptible
-    ifelse four-neigh? [
-      set neigh neighbors4
-    ][
-      set neigh neighbors
-    ]
   ]
   ask n-of initial-infected patches [
     set status 2 ; infective
     set pcolor red
   ]
   ;; set counts
-  set infected 0
+  set infected initial-infected
   reset-ticks
 end
 
 to go
+  let m 0
   if not any? patches with [status >= 2] [ stop ]
-  ask patches with [status = 0][
-    if any? neigh with [status >= 2] and random-float 1 < infectivity [
-      set status 3  ; newly infected
+  ifelse four-neighbors? [
+    ask patches with [status = 0][
+      set m count neighbors4 with [status >= 2]
+      if random-float 1 < 1 - (1 - tau) ^ m [
+        set status 3  ; newly infected
+      ]
+    ]
+  ][
+    ask patches with [status = 0][
+      set m count neighbors with [status >= 2]
+      if random-float 1 < 1 - (1 - tau) ^ m [
+        set status 3  ; newly infected
+      ]
     ]
   ]
   ask patches with [status = 2] [
@@ -47,11 +53,11 @@ end
 GRAPHICS-WINDOW
 219
 10
-672
-464
+595
+387
 -1
 -1
-2.764
+2.29
 1
 10
 1
@@ -72,15 +78,15 @@ ticks
 30.0
 
 SLIDER
-5
+10
 38
-190
+181
 71
-infectivity
-infectivity
+tau
+tau
 0.0
 1
-0.21
+0.43
 .01
 1
 NIL
@@ -123,8 +129,8 @@ NIL
 PLOT
 0
 226
-200
-376
+210
+386
 infection
 time
 perc.inf.
@@ -147,7 +153,7 @@ initial-infected
 initial-infected
 1
 10
-8.0
+1.0
 1
 1
 NIL
@@ -156,11 +162,11 @@ HORIZONTAL
 SWITCH
 6
 185
-174
+199
 218
-four-neigh?
-four-neigh?
-1
+four-neighbors?
+four-neighbors?
+0
 1
 -1000
 
@@ -538,7 +544,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.4.0
 @#$#@#$#@
 set density 60.0
 setup
@@ -552,7 +558,7 @@ repeat 180 [ go ]
     <metric>(count patches with [status = 2] / initial-trees)</metric>
     <steppedValueSet variable="density" first="0.5" step="0.01" last="0.7"/>
   </experiment>
-  <experiment name="experiment" repetitions="10" runMetricsEveryStep="false">
+  <experiment name="experiment (1)" repetitions="10" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>(count patches with [status = 1] / count patches)</metric>

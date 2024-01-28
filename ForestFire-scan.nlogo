@@ -77,8 +77,8 @@ end
 GRAPHICS-WINDOW
 25
 228
-239
-443
+217
+421
 -1
 -1
 3.02
@@ -140,9 +140,9 @@ PLOT
 10
 801
 450
-Percentuale alberi bruciati
+Burned trees
 density
-percetuale
+percent
 0.0
 1.0
 0.0
@@ -154,7 +154,7 @@ PENS
 "default" 1.0 0 -16777216 true "" ""
 
 SLIDER
-37
+24
 60
 227
 93
