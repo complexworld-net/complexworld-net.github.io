@@ -1,21 +1,21 @@
 globals [
-   x  x0old rold deltatold hist
+   x  x0old rold Δtold hist nh
 ]
 
 to go
-  if (r != rold or x0 != x0old or deltat != deltatold) [
+  if (r != rold or x0 != x0old or Δt != Δtold) [
     set rold r
     set x0old x0
-    set deltatold deltat
+    set Δtold Δt
     replot
   ]
-
 end
 
 to startup
   set rold -1
   set x0old -1
-  set deltatold -1
+  set Δtold -1
+  set nh 100
   clear-all-plots
 end
 
@@ -35,7 +35,7 @@ to replot
   set xx x0
   let yy 0
   plotxy xx 0
-  repeat deltat [
+  repeat Δt [
     set yy f(xx)
     plotxy xx yy
     plotxy yy yy
@@ -43,26 +43,26 @@ to replot
   ]
   set-current-plot "time-series"
   clear-plot
-  set-plot-x-range 0 deltat
+  set-plot-x-range 0 Δt
   set xx x0
   let t 0
   let i 0
-  set hist n-values 100 [0]
+  set hist n-values nh [0]
   plotxy t xx
-  repeat deltat [
+  repeat Δt [
     set xx f(xx)
     plotxy t xx
-    set i int(xx * 100)
+    set i int(xx * nh)
     set hist replace-item i hist (item i hist + 1)
     set t t + 1
   ]
   set-current-plot "histogram"
   clear-plot
   set-plot-y-range 0 max hist
-  set-plot-pen-interval (1 / 100)
+  set-plot-pen-interval (1 / nh)
   set-plot-pen-mode 1
   set i 0
-  repeat 100 [
+  repeat nh [
     plot item i hist
     set i i + 1
   ]
@@ -190,8 +190,8 @@ SLIDER
 410
 897
 443
-deltat
-deltat
+Δt
+Δt
 0
 500
 500.0
@@ -219,11 +219,11 @@ PENS
 "default" 1.0 0 -16777216 true "" ""
 
 TEXTBOX
-70
-20
-725
-52
-Logistic map x' = rx(1-x). Press go to start simulations. Then you can vary a, x0 and time interval deltat
+128
+31
+335
+63
+Logistic map x' = rx(1-x). 
 14
 0.0
 1
@@ -551,7 +551,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
