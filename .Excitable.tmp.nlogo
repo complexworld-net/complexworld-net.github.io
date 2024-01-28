@@ -109,6 +109,17 @@ GRAPHICS-WINDOW
 ticks
 30.0
 
+MONITOR
+23
+404
+138
+449
+percent burned
+(count patches with [status = 2] / initial-trees)\n* 100
+1
+1
+11
+
 SLIDER
 5
 38
@@ -118,7 +129,7 @@ density
 density
 0.0
 1
-0.75
+0.65
 .01
 1
 NIL
@@ -193,7 +204,7 @@ HORIZONTAL
 BUTTON
 35
 252
-138
+132
 285
 NIL
 half-line
@@ -224,7 +235,7 @@ HORIZONTAL
 
 BUTTON
 100
-128
+126
 174
 165
 NIL
@@ -248,7 +259,7 @@ beat
 beat
 0
 100
-0.0
+50.0
 10
 1
 NIL
