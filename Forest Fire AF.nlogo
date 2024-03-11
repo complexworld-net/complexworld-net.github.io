@@ -90,14 +90,14 @@ SLIDER
 165
 202
 198
-density
-density
+Density
+Density
 0.0
 1
-0.68
+0.55
 .01
 1
-%
+NIL
 HORIZONTAL
 
 BUTTON
@@ -134,28 +134,11 @@ NIL
 NIL
 1
 
-BUTTON
-64
-329
-137
-362
-NIL
-restart
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 PLOT
-25
-384
-209
-534
+26
+323
+210
+473
 Percentuale alberi bruciati
 NIL
 NIL

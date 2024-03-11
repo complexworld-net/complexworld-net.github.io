@@ -55,17 +55,10 @@ end
 to place-circle
   ask one-of circles [
     set size 2 * radius
+    show-turtle
+    setxy 0 0
   ]
-  if mouse-down? [
-    set xx mouse-xcor
-    set yy mouse-ycor
-    ask one-of circles [
-      setxy mouse-xcor mouse-ycor
-      show-turtle
-
-    ]
-    reset-ticks
-  ]
+  reset-ticks
 end
 
 
@@ -176,10 +169,10 @@ NIL
 1
 
 BUTTON
-590
-180
-650
-213
+574
+176
+634
+209
 NIL
 go
 T
@@ -193,10 +186,10 @@ NIL
 0
 
 BUTTON
-470
-175
-574
-208
+456
+176
+560
+209
 NIL
 place-circle
 T
@@ -214,7 +207,7 @@ TEXTBOX
 10
 747
 146
-Funzionamento del gioco: \n\n1) Inserire un identificativo. \n2) Premere \"setup\".\n3) Osservare la disposizione degli alberi, la loro grandezza e densità.\n3) Cliccare su \"place-circle\" e posizionare il cerchio giallo, il cui raggio può essere cambiato con \"radius\" cercando di prevedere il limite raggiunto dal fuoco, che inizierà dall'albero rosso al centro.\n4) Cliccare su \"go\" e vedere se la previsione è confermata.
+Funzionamento del gioco: \n\n1) Inserire un identificativo. \n2) Premere \"setup\".\n3) Osservare la disposizione degli alberi, la loro grandezza e densità.\n3) Cliccare su \"place-circle\".\n4) Variare il raggio agendo con il pulsante \"radius\" in modo dan prevedere il limite raggiunto dal fuoco.\n4) Cliccare su \"go\" e confrontare l'area prevista con quella raggiunta.
 14
 0.0
 1
@@ -228,7 +221,7 @@ radius
 radius
 0
 max-pxcor
-19.6
+14.6
 .1
 1
 NIL
@@ -591,5 +584,5 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 @#$#@#$#@
-1
+0
 @#$#@#$#@
