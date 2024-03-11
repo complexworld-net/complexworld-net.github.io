@@ -297,7 +297,7 @@ TEXTBOX
 15
 740
 145
-Questa applicazione simula le traiettorie di un pendolo di ferro attratto da tre magneti, colorati di rosso, verde e blu. Premere il pulsante \"setup\" e successivamente il bottone \"go\". E' adesso possibile spostare il pendolo con il mouse in un punto di partenza e lasciarlo andare. Alla fine si fermerà su un magnete e il punto di partenza verrà colorato con il colore del magnete di arrivo. L'obiettivo è quello di capire in quali zone sia più probabile che una piccola differenza iniziale porti a un magnete differente.  \n\nImpostare la velocità del modello ad un valore abbastanza alto in modo che l'animazione scorra velocemente. 
+Questa applicazione simula le traiettorie di un pendolo di ferro attratto da tre magneti, colorati di rosso, verde e blu. Premere il pulsante \"setup\" e successivamente il bottone \"go\". E' adesso possibile far partire il pendolo con il mouse cliccando un punto di partenza sulla mappa. Alla fine si fermerà su un magnete e il punto di partenza verrà colorato con il colore del magnete di arrivo. L'obiettivo è quello di capire in quali zone sia più probabile che una piccola differenza iniziale porti a un magnete differente o a traiettorie imprevedibili.  \n\nImpostare la velocità del modello ad un valore abbastanza alto in modo che l'animazione scorra velocemente. 
 14
 0.0
 1
