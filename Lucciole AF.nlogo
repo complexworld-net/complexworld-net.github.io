@@ -133,7 +133,7 @@ TEXTBOX
 10
 613
 180
-Come funziona il gioco: Ogni lucciola è capace di comunicare con le altre e l'abilità di comunicare è data dal parametro k.\n\nScopo del gioco: Ttrovare il valore del parametro k per il quale le lucciole si accendono e spengono in sincorono (tipicamente valore  di circa 0,750).\n\nCosa fare: Ppremere il pulsante \"setup\" e successivamente \"go\". Variare quindi il paramtro k fino a che non si è raggiunta la sincronizzazione.
+Come funziona il gioco: Ogni lucciola è capace di comunicare con le altre e l'abilità di comunicare è data dal parametro k.\n\nScopo del gioco: Ttrovare il valore del parametro k per il quale le lucciole si accendono e spengono in sincorono (tipicamente valore  di circa 0,750).\n\nCosa fare: Premere il pulsante \"setup\" e successivamente \"go\". Variare quindi il paramtro k fino a che non si è raggiunta la sincronizzazione.
 14
 0.0
 1
