@@ -69,10 +69,10 @@ ticks
 30.0
 
 BUTTON
-47
-256
-113
-289
+54
+220
+120
+253
 NIL
 setup
 NIL
@@ -86,10 +86,10 @@ NIL
 1
 
 SLIDER
-95
-195
-232
-228
+110
+173
+247
+206
 K
 K
 0.0
@@ -101,10 +101,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-214
-264
-277
-297
+221
+228
+284
+261
 NIL
 go
 T
@@ -118,10 +118,10 @@ NIL
 1
 
 MONITOR
-87
-307
-236
-364
+94
+271
+243
+328
 sincronizzazione
 precision z 3
 17
@@ -139,10 +139,10 @@ Come funziona il gioco: Ogni lucciola è capace di comunicare con le altre e l'a
 1
 
 PLOT
-19
-386
-361
-582
+26
+350
+368
+546
 Sincronizzazione
 Time
 Sincronizzazione

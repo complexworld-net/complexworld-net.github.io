@@ -92,6 +92,7 @@ to spot-the-chaos
       user-message (word "Hai spottato " nn " punti massimamente caotici.")
       record-answer
       set answered? true
+      reveal
       stop
     ]
   ][
@@ -258,9 +259,9 @@ end
 @#$#@#$#@
 GRAPHICS-WINDOW
 235
-130
+150
 734
-630
+650
 -1
 -1
 14.9

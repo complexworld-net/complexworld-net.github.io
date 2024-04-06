@@ -78,18 +78,24 @@ to reveal ; image
 end
 
 to spot-the-chaos
-  ask one-of spots [
-    set hidden? true
-    setxy mouse-xcor mouse-ycor
-  ]
-  if mouse-down? [
-    set xxx mouse-xcor
-    set yyy mouse-ycor
+  ifelse not answered? [
     ask one-of spots [
-      set nn sum [MAXS] of patches in-radius 2
+      set hidden? true
+      setxy mouse-xcor mouse-ycor
     ]
-    user-message (word "Hai spottato " nn " punti massimamente caotici.")
-    record-answer
+    if mouse-down? [
+      set xxx mouse-xcor
+      set yyy mouse-ycor
+      ask one-of spots [
+        set nn sum [MAXS] of patches in-radius 2
+      ]
+      user-message (word "Hai spottato " nn " punti massimamente caotici.")
+      record-answer
+      set answered? true
+      stop
+    ]
+  ][
+    user-message "Hai già risposto."
     stop
   ]
 end
@@ -109,10 +115,7 @@ to record-answer
   let lnk "https://docs.google.com/forms/d/e/1FAIpQLSeGr7IOM8fPXmn6pFD--8Fs5AWantOPdJ64KegZ859IvgaqqQ/formResponse?"
 
   let ll reduce [[x y] -> (word x "&" y)] map [a -> reduce [[z w] -> (word z "=" w)] a] args
-  if not answered? [
-    fetch:url-async (word lnk ll) [->]
-    set answered? true
-  ]
+  fetch:url-async (word lnk ll) [->]
 end
 
 
@@ -347,7 +350,7 @@ INPUTBOX
 264
 155
 id
-NIL
+qwfwfwe
 1
 0
 String

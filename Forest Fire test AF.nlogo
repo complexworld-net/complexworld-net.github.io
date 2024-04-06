@@ -20,7 +20,7 @@ to setup
   ifelse id = "" [
     user-message "Inserire un id"
   ][
-    set radius 1
+    set raggio 1
     ask patches [
       set infectivity (1 - abs(pxcor) / max-pxcor)
       set density (1 - abs(pycor) / max-pycor)
@@ -48,13 +48,13 @@ to setup
       hide-turtle
     ]
     set submitted? false
-    user-message "Piazzare il cerchio e regolare il raggio in modo che copra l'area dove si prevede arrivi l'incendio. Quindi premere 'go'."
+    user-message "Premi il bottone 'place circle', quindi regola il raggio in modo che copra l'area dove si prevede arrivi l'incendio. Quindi premere 'go'."
   ]
 end
 
 to place-circle
   ask one-of circles [
-    set size 2 * radius
+    set size 2 * raggio
     show-turtle
     setxy 0 0
   ]
@@ -88,8 +88,8 @@ to go
     let sumx sum [pxcor] of patches with [state = 4]
     let sumy sum [pycor] of patches  with [state = 4]
 
-    let x sumx / sumq
-    let y sumy / sumq
+    let x 0
+    let y 0
     let sumr2 sum [((pxcor - x) ^ 2 + (pycor - y) ^ 2 )] of patches with [state = 4]
     set rr 1.5 * sqrt(sumr2 / sumq); why 1.5???
     crt 1 [
@@ -99,6 +99,7 @@ to go
       set color [255 0 0 100]
     ]
     upload
+    user-message (word "Hai scelto un raggio " raggio ", mentre quello calcolato è " rr);
     stop
   ]
 end
@@ -109,9 +110,7 @@ to upload
     ["submit" "Submit"]
     ["usp" "pp_url"]
     (list "entry.1918029285" id)
-    (list "entry.1817016581" (word precision xx 3))
-    (list "entry.291936775" (word precision yy 3))
-    (list "entry.1621191553" (word precision radius 3))
+    (list "entry.1621191553" (word precision raggio 3))
     (list "entry.253904336" (word precision rr 3))
   )
   ;https://docs.google.com/forms/d/e/1FAIpQLSc3Wx68IGPL5qoY5rCc6w3V8aB0g2gLx7lEaIWNNqIqB8B3xA/viewform?usp=pp_url&entry.1918029285=id&entry.1817016581=xx&entry.291936775=yy&entry.1621191553=rr&entry.253904336=rrr
@@ -119,6 +118,7 @@ to upload
 
   let ll reduce [[x y] -> (word x "&" y)] map [a -> reduce [[q w] -> (word q "=" w)] a] args
   if not submitted? [
+  show ll
     fetch:url-async (word lnk ll) [->]
     set submitted? true
   ]
@@ -207,7 +207,7 @@ TEXTBOX
 10
 747
 146
-Funzionamento del gioco: \n\n1) Inserire un identificativo. \n2) Premere \"setup\".\n3) Osservare la disposizione degli alberi, la loro grandezza e densità.\n3) Cliccare su \"place-circle\".\n4) Variare il raggio agendo con il pulsante \"radius\" in modo dan prevedere il limite raggiunto dal fuoco.\n4) Cliccare su \"go\" e confrontare l'area prevista con quella raggiunta.
+Funzionamento del gioco: \n\n1) Inserire un identificativo. \n2) Premere \"setup\".\n3) Osservare la disposizione degli alberi, la loro grandezza e densità.\n3) Cliccare su \"place-circle\".\n4) Variare il raggio agendo con il pulsante \"radius\" in modo da prevedere il limite raggiunto dal fuoco.\n4) Cliccare su \"go\" e confrontare l'area prevista con quella raggiunta.
 14
 0.0
 1
@@ -217,11 +217,11 @@ SLIDER
 175
 355
 208
-radius
-radius
+raggio
+raggio
 0
 max-pxcor
-14.6
+17.7
 .1
 1
 NIL
