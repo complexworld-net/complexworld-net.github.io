@@ -44,8 +44,8 @@ end
 GRAPHICS-WINDOW
 399
 198
-723
-523
+934
+734
 -1
 -1
 52.7
@@ -59,9 +59,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-5
+9
 0
-5
+9
 0
 0
 1
@@ -69,11 +69,11 @@ ticks
 30.0
 
 BUTTON
-54
-220
-120
-253
-NIL
+47
+256
+113
+289
+Setup
 setup
 NIL
 1
@@ -86,26 +86,26 @@ NIL
 1
 
 SLIDER
-110
-173
-247
-206
+95
+195
+232
+228
 K
 K
 0.0
 1.0
-1.0
+0.22
 .01
 1
 NIL
 HORIZONTAL
 
 BUTTON
-221
-228
-284
-261
-NIL
+214
+264
+277
+297
+Go
 go
 T
 1
@@ -118,11 +118,11 @@ NIL
 1
 
 MONITOR
-94
-271
-243
-328
-sincronizzazione
+87
+307
+236
+364
+Sincronizzazione
 precision z 3
 17
 1
@@ -133,18 +133,18 @@ TEXTBOX
 10
 613
 180
-Come funziona il gioco: Ogni lucciola è capace di comunicare con le altre e l'abilità di comunicare è data dal parametro k.\n\nScopo del gioco: Ttrovare il valore del parametro k per il quale le lucciole si accendono e spengono in sincorono (tipicamente valore  di circa 0,750).\n\nCosa fare: Premere il pulsante \"setup\" e successivamente \"go\". Variare quindi il paramtro k fino a che non si è raggiunta la sincronizzazione.
+Come funziona il gioco: Ogni lucciola è capace di comunicare con le altre e l'abilità di comunicare è data dal parametro K.\n\nScopo del gioco: Trovare il valore soglia del parametro K per il quale le lucciole si accendono e spengono in modo sincoronizzato. Questo corrisponde quindi al valore minimo per cui si osserva stabilità nel grafico.\n\nCosa fare: Premere il pulsante \"Setup\" e successivamente \"Go\". Variare quindi il paramtro K fino a che non si è raggiunta la sincronizzazione.
 14
 0.0
 1
 
 PLOT
-26
-350
-368
-546
+19
+386
+361
+582
 Sincronizzazione
-Time
+Tempo
 Sincronizzazione
 0.0
 100.0

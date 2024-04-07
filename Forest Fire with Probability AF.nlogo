@@ -4,12 +4,12 @@ globals [initial-trees]
 to setup
  ca
   ask patches [
-    if random-float 100 < density [
+    if random-float 100 < Densità [
       set state 1
       sprout 1 [
         set shape "tree"
         set color green
-        set size dimension / 100
+        set size Dimension / 100
       ]
     ]
     set initial-trees count patches with [state = 1]
@@ -25,7 +25,7 @@ end
 to go
   ask patches with [state = 2] [
     ask neighbors with [state = 1] [
-      if random-float 100 < dimension [
+      if random-float 100 < Dimension [
         set state 3
         ask turtles-here [
           set color yellow
@@ -35,9 +35,9 @@ to go
   ]
   ask patches with [state = 2] [
     set state 4
-    set pcolor gray
+    set pcolor yellow
     ask turtles-here [
-      set color gray
+      set color yellow
     ]
   ]
   ask patches with [state = 3] [
@@ -82,7 +82,7 @@ BUTTON
 260
 115
 305
-NIL
+Setup
 setup
 NIL
 1
@@ -99,7 +99,7 @@ BUTTON
 260
 195
 305
-NIL
+Go
 go
 T
 1
@@ -112,15 +112,15 @@ NIL
 1
 
 SLIDER
-21
+20
 165
-276
+270
 198
-density
-density
+Densità
+Densità
 0
 100
-67.0
+40.0
 1
 1
 %
@@ -131,14 +131,14 @@ SLIDER
 215
 270
 248
-dimension
-dimension
-0
+Dimension
+Dimension
+20
 100
-46.0
+92.0
 1
 1
-%
+NIL
 HORIZONTAL
 
 TEXTBOX
@@ -146,7 +146,7 @@ TEXTBOX
 10
 780
 146
-Come funziona il gioco: se un albero è in fiamme (rosso), il fuoco si può propagare agli alberi immediatamente vicini, con una probabilità che dipende dalle dimensioni dell'albero.\n\nScopo del gioco: farsi un'idea della relazione tra densità (numero degli alberi in una certa area) e loro dimensione (che si riflette nella probabilità di comunicare il fuoco ai vicini) in modo che l'incendio, che comincia da un albero a caso, non si propaghi a tutto il bosco.\n\nCosa fare: variare densità e dimensione, premere \"setup\" e poi \"go\", e osservare come l'incendio si propaga. 
+Come funziona il gioco: se un albero è in fiamme (rosso), il fuoco si può propagare agli alberi immediatamente vicini, con una probabilità che dipende dalle dimensioni dell'albero.\n\nScopo del gioco: farsi un'idea della relazione tra densità (numero degli alberi in una certa area) e loro dimensione (che si riflette nella probabilità di comunicare il fuoco ai vicini) in modo che l'incendio, che comincia da un albero a caso, non si propaghi a tutto il bosco.\n\nCosa fare: variare densità e dimensione, premere \"Setup\" e poi \"Go\", e osservare come l'incendio si propaga. 
 14
 0.0
 1
@@ -154,9 +154,9 @@ Come funziona il gioco: se un albero è in fiamme (rosso), il fuoco si può prop
 MONITOR
 60
 315
-170
+227
 360
-fraction burned
+Percentuale di alberi bruciati
 (word (precision (100 * count patches with [state = 4] / initial-trees) 1) \" %\")
 17
 1

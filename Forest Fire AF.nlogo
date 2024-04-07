@@ -9,7 +9,7 @@ patches-own [status]
 to setup
   clear-all
   ;; make some green trees
-  ask patches with [(random-float 1) < density][
+  ask patches with [(random-float 1) < densità][
     set pcolor green
     set status 1
   ]
@@ -77,9 +77,9 @@ ticks
 MONITOR
 55
 258
-170
+210
 303
-percent burned
+Percentuale alberi bruciati
 (count patches with [status = 2] / initial-trees)\n* 100
 1
 1
@@ -90,11 +90,11 @@ SLIDER
 165
 202
 198
-Density
-Density
+Densità
+Densità
 0.0
 1
-0.55
+0.95
 .01
 1
 NIL
@@ -105,7 +105,7 @@ BUTTON
 206
 187
 242
-go
+Go
 go
 T
 1
@@ -122,8 +122,8 @@ BUTTON
 206
 108
 242
-setup
-setup
+Setup
+Setup
 NIL
 1
 T
@@ -140,8 +140,8 @@ PLOT
 210
 473
 Percentuale alberi bruciati
-NIL
-NIL
+Tempo
+% bruciati
 0.0
 10.0
 0.0
@@ -157,7 +157,7 @@ TEXTBOX
 10
 638
 163
-Come funziona il gioco: se un albero è incendiato (rosso) il fuoco può propagarsi agli alberi vicini.\n\nScopo del gioco: trovare la densità per cui si brucia (approssimatovamente) metà foresta.\n\nCosa fare: scegliere un valore di densità, premere il pulsante \"setup\" e successivamente \"go\". Nelle caselle gialle apparirà la percentuale di alberi bruciati.\n\nNB: FARE PIU' TENTATIVI CON LA STESSA DENSITA', DOPODICHE' VARIARE LA DENSITA' E RIPETERE IL TEST.
+Come funziona il gioco: se un albero è incendiato (rosso) il fuoco può propagarsi agli alberi vicini.\n\nScopo del gioco: trovare la densità per cui si brucia (approssimatovamente) metà foresta.\n\nCosa fare: scegliere un valore di densità, premere il pulsante \"Setup\" e successivamente \"Go\". Nelle caselle gialle apparirà la percentuale di alberi bruciati.\n\nNB: FARE PIU' PROVE CON LA STESSA DENSITA', DOPODICHE' VARIARE LA DENSITA' E RIPETERE IL TEST.
 14
 0.0
 1
