@@ -22,7 +22,7 @@ to setup
     user-message "Inserire un id."
   ][
     init
-    user-message "Premere 'trace' e scegliere il punto di inizio. Regolare la sbarra della velocità verso il massimo (se su browser) in alto in modo che le traiettorie vengano tracciate velocemente."
+    user-message "Premere 'Go' e scegliere il punto di inizio. Regolare la sbarra della velocità verso il massimo (se su browser) in alto in modo che le traiettorie vengano tracciate velocemente."
   ]
 end
 
@@ -136,7 +136,7 @@ to place-bob
   ]
 end
 
-to trace
+to Go
   ifelse  not placed? [
     place-bob
     set ticks? false
@@ -285,12 +285,12 @@ ticks
 30.0
 
 BUTTON
-65
-220
-131
-253
+60
+225
+126
+258
 NIL
-setup
+Setup
 NIL
 1
 T
@@ -304,10 +304,10 @@ NIL
 BUTTON
 25
 265
-88
+87
 298
 NIL
-trace
+Go
 T
 1
 T
@@ -323,7 +323,7 @@ TEXTBOX
 25
 730
 141
-Per verificare la comprensione del problema viene adesso richiesto di scegliere una zona, rappresentata da un cerchio, in cui si pensa ci sia maggior sensibilità alle condizioni iniziali, ovvero per il quale una piccola differenza nella posizione iniziale porta a traiettorie molto diverse.\nPremere il pulsante \"setup\" per preparare il tavolo da giocio.\nPremere \"trace\" e cliccare su un punto della mappa per far partire il pendolo.\nInfine, quando si è pronti per il test, premere \"spot-the-chaos\" e scegliere il punto maggiormente sensibili alle condizioni iniziali.
+Per verificare la comprensione del problema viene adesso richiesto di scegliere una zona, rappresentata da un cerchio, in cui si pensa ci sia maggior sensibilità alle condizioni iniziali, ovvero per il quale una piccola differenza nella posizione iniziale porta a traiettorie molto diverse.\nPremere il pulsante \"Setup\" per preparare il tavolo da giocio.\nPremere \"Go\" e cliccare su un punto della mappa per far partire il pendolo.\nInfine, quando si è pronti per il test, premere \"Spot\" e scegliere il punto maggiormente sensibili alle condizioni iniziali.
 14
 0.0
 1
@@ -332,8 +332,8 @@ BUTTON
 105
 265
 205
-299
-NIL
+298
+Spot
 spot-the-chaos
 T
 1
@@ -350,8 +350,8 @@ INPUTBOX
 150
 200
 210
-id
-qwfwfwe
+ID
+NIL
 1
 0
 String
