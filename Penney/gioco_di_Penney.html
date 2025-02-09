@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style>
+    #game {
+    text-align:center;
+    margin:auto;
+    width:640px;
+    background:green;
+    border:1px solid green;
+    padding:20px;
+  }
+  #restart {
+    text-align:center;
+    padding:10pt;
+    border-radius: 20px;
+    width:350px;
+    background-color:lightblue;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+  }
+
+
+  #strings {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 6pt;
+    width:350px;
+    position: relative;
+    overflow: hidden;
+    background-color:yellow;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+
+  #results {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 10pt;
+    width:350px;
+    position: relative;
+    overflow: hidden;
+    background-color:lightgreen;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+  .controlsa {
+    padding:10pt;
+    text-align:center;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    background-color:pink;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+  .controlsb {
+    padding:10pt;
+    text-align:center;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    background-color:lightblue;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+ .controlsa ul {
+     list-style-type:none;
+     margin:0;
+     padding:0;
+}
+ .controlsb ul {
+     list-style-type:none;
+     margin:0;
+     padding:0;
+}
+
+ .button {
+   cursor: pointer;
+   font-weight: bold;
+ }
+ .substra {
+   cursor: pointer;
+   font-weight: bold;
+      border: 1px;
+ }
+ .substrb {
+   cursor: pointer;
+   font-weight: bold;
+      border: 1px;
+ }
+ .ssa {
+    color:yellow;
+    background-color: blue;
+    font-weight:bold;
+  }
+ .ssb {
+    color:yellow;
+    background-color: red;
+    font-weight:bold;
+  }
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
+<script src="jquery.min.js"> </script>
+<script>
+  var str=[];
+  var times=[];
+  var S = 3;
+  var N = 40;
+  var L = 60;
+  var NN = 10000;
+
+
+  var xa="";
+  var xb="";
+
+  var start = function () {
+    $('#strings').html("");
+    $("#controls2").hide();
+    var x;
+    for (var j=0; j<NN; j++) {
+      str[j] = "";
+      for (var i=0; i<L; i++) {
+        x = Math.random()>0.5? '1':'0';
+        str[j]=str[j].concat(x);
+      }
+    }
+    $("#results").html("risultati");
+    $('#strings').html(str.slice(0,N).join("<br />"));
+    $('#a'+xa).css("color", "black");
+    $('#a'+xa).css("background-color", "pink");
+    $('#b'+xa).css("color", "black");
+    $('#b'+xb).css("color", "black");
+    $('#b'+xb).css("background-color", "lightblue");
+    xa = "";
+    xb = "";
+  };
+
+
+
+  var first = function (y) {
+    if (xa != "") return;
+    xa = $(y).html();
+    $('#a'+xa).css("color", "yellow");
+    $('#a'+xa).css("background-color", "blue");
+    $('#b'+xa).css('color', "grey");
+    $("#controls2").show();
+  }
+
+  var second = function (y) {
+    if ($(y).html()==xa) return;
+    if (xb != "") return;
+    xb = $(y).html();
+    var ss=[];
+    $(y).css("color", "yellow");
+    $(y).css("background-color", "red");
+    var counta = 0;
+    var countb = 0;
+    for (var i=0; i<NN; i++) {
+      var ia = str[i].indexOf(xa);
+      var ib = str[i].indexOf(xb);
+      if (ia<ib) {
+        if (i < N) {
+          ss[i] = str[i].replace(xa, "<span class='ssa'>"+xa+"</span>") + "&nbsp;&nbsp; <span class='ssa'> vince 1</span>";
+        }
+        counta++;
+      } else {
+        if (i < N) {
+          ss[i] = str[i].replace(xb, "<span class='ssb'>"+xb+"</span>") + "&nbsp;&nbsp; <span class='ssb'>vince 2</span>";
+        }
+        countb++;
+      }
+    }
+    var st = ss.join("<br />");
+    $('#strings').html(st);
+    $('#results').html("Su "+NN+" ripetizioni, il giocatore 1 vince "+counta+
+      " volte e il giocatore 2 "+countb+" volte.");
+
+  }
+
+  //$(".substr").bind("click", detect);
+  $(document).ready(function() {
+    $('#start').click(start);
+    start();
+  });
+</script>
+</head>
+<body>
+<div id="game">
+<div id="container">
+
+<table>
+  <tr><td>
+
+  <div class="controlsa" id="controls1">
+     Giocatore 1:<br />
+  <ul>
+  <li><span id="a000" onclick="first(this)" class="substra">000</span></li>
+  <li><span id="a001" onclick="first(this)" class="substra">001</span></li>
+  <li><span id="a010" onclick="first(this)" class="substra">010</span></li>
+  <li><span id="a011" onclick="first(this)" class="substra">011</span></li>
+  <li><span id="a100" onclick="first(this)" class="substra">100</span></li>
+  <li><span id="a101" onclick="first(this)" class="substra">101</span></li>
+  <li><span id="a110" onclick="first(this)" class="substra">110</span></li>
+  <li><span id="a111" onclick="first(this)" class="substra">111</span></li>
+  </ul>
+  </div>
+</td><td>
+ <div id="strings">
+ stringhe
+ </div>
+</td><td>
+
+ <div class ="controlsb" id="controls2" style="display:none">
+      Giocatore 2:<br />
+   <ul>
+  <li><span id="b000" onclick="second(this)" class="substrb">000</span></li>
+  <li><span id="b001" onclick="second(this)" class="substrb">001</span></li>
+  <li><span id="b010" onclick="second(this)" class="substrb">010</span></li>
+  <li><span id="b011" onclick="second(this)" class="substrb">011</span></li>
+  <li><span id="b100" onclick="second(this)" class="substrb">100</span></li>
+  <li><span id="b101" onclick="second(this)" class="substrb">101</span></li>
+  <li><span id="b110" onclick="second(this)" class="substrb">110</span></li>
+  <li><span id="b111" onclick="second(this)" class="substrb">111</span></li>
+  </ul>
+</div>
+</td></tr>
+<tr><td></td><td>
+  <div id="results">
+ risultati
+ </div><br />
+ <div id="restart">
+ <span id="start" class="button">ricomincia</span>
+</div>
+
+</td><td></td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>

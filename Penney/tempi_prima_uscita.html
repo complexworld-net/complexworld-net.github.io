@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+<style>
+
+  #game {
+    text-align:center;
+    margin:auto;
+    width:360px;
+    background-color:green;
+    border:1px solid green;
+    padding:20px 40px 20px 40px ;
+  }
+
+  #restart {
+    text-align:center;
+    padding:10pt;
+    border-radius: 20px;
+    background-color:lightblue;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+  }
+
+  #strings {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 6pt;
+    position: relative;
+    overflow: hidden;
+    background-color:yellow;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+   text-align:left;
+ }
+
+  #results {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    background-color:lightgreen;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+  }
+  #controls {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    background-color:pink;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+
+ .button {
+   cursor: pointer;
+   font-weight: bold;
+ }
+ .substr {
+   cursor: pointer;
+   font-weight: bold;
+      border: 1px;
+ }
+ .ss {
+    color:red;
+    background-color: blue;
+    font-weight:bold;
+  }
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
+<script src="jquery.min.js"> </script>
+
+<script>
+  var str=[];
+  var times=[];
+  var S = 3;
+  var N = 40;
+  var L = 60;
+  var NN = 10000;
+  var sr;
+  var start = function () {
+    $('#strings').html("");
+    var x;
+    for (var j=0; j<NN; j++) {
+      str[j] = "";
+      for (var i=0; i<L; i++) {
+        x = Math.random()>0.5? '1':'0';
+        str[j]=str[j].concat(x);
+      }
+    }
+    sr = "Tempi medi su "+NN+" ripetizioni:";
+    $("#results").html("risultati");
+
+    $('#strings').html(str.slice(0,N).join("<br />"));
+  };
+
+
+
+  var detect = function (y) {
+    var ss=[];
+    var nn=[];
+    var tt = 0;
+    var x = $(y).html();
+    for (var i=0; i<NN; i++) {
+      nn = str[i].indexOf(x,0)+S;
+      tt += nn;
+      if (i<N) {
+        ss[i] = str[i].replace(x, "<span class='ss'>"+x+"</span>") + "&nbsp;&nbsp; t="+nn;
+      }
+    }
+    var st = ss.join("<br />");
+    $('#strings').html(st);
+    sr += "<br />"+x+" : "+tt/NN;
+    $("#results").html(sr);
+  }
+
+  $(document).ready(function() {
+    $('#start').click(start);
+    start();
+  });
+</script>
+</head>
+
+<body>
+
+<div id="game">
+
+<div id="container">
+
+ <div id="strings">
+ stringhe
+ </div>
+
+
+ <div id="controls">
+   Cliccare su una sequenza <br />
+  <span id="0" onclick="detect(this)" class="substr">000</span>
+  <span id="1" onclick="detect(this)" class="substr">001</span>
+  <span id="2" onclick="detect(this)" class="substr">010</span>
+  <span id="3" onclick="detect(this)" class="substr">011</span>
+  <span id="4" onclick="detect(this)" class="substr">100</span>
+  <span id="5" onclick="detect(this)" class="substr">101</span>
+  <span id="6" onclick="detect(this)" class="substr">110</span>
+  <span id="7" onclick="detect(this)" class="substr">111</span>
+</div>
+
+<div id="results">
+ risultati
+ </div> <br />
+<div id="restart">
+ <span id="start" class="button">ricomincia</span>
+</div>
+</div>
+
+
+</body>
+</html>

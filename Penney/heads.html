@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style>
+
+  #game {
+    text-align:center;
+    margin:auto;
+    width:800px;
+    background-color:green;
+    border:1px solid green;
+    padding:20px 40px 20px 40px ;
+  }
+
+  #restart {
+    text-align:center;
+    padding:10pt;
+    border-radius: 20px;
+    background-color:lightblue;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+  }
+
+  #strings {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 6pt;
+    position: relative;
+    overflow: hidden;
+    background-color:yellow;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+
+  #results {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    background-color:lightgreen;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+  #controls {
+    padding:10pt;
+    font-family: monospace;
+    font-size: 10pt;
+    position: relative;
+    overflow: hidden;
+    text-align:center;
+    margin:auto;
+    background-color:pink;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+ }
+
+ .button {
+   cursor: pointer;
+   font-weight: bold;
+ }
+ .substr {
+   cursor: pointer;
+   font-weight: bold;
+      border: 1px;
+ }
+ .ss {
+    color:red;
+    background-color: blue;
+    font-weight:bold;
+  }
+  table {
+    text-align:center;
+    margin:auto;
+    border:1px solid black;
+    border-collapse:collapse;
+
+  }
+  td {
+    text-align:center;
+    margin:auto;
+    border:1px solid black;
+    padding:5px;
+  }
+  th{
+    text-align:center;
+    margin:auto;
+    border:1px solid black;
+    padding:5px;
+    background-color:yellow;
+  }
+
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
+<script src="jquery.min.js"> </script>
+<script>
+
+function vai() {
+
+  $("#results").html("");
+
+  var N = $('#N').val();   // lunghezza della serie temporale
+
+  var K=$('#K').val();  // numero ripetizioni
+
+  var PM;
+  var maskM;
+  var p2=[];
+  var alt;
+  var ent;
+  var y;
+  var distr=[]; // distribuzione
+  var first=[]; // tempo prima apparizione
+  var last=[]; // tempo di ultima apparizione
+  var interval=[]; //distribuzione intervalli
+  var ninterval=[]; //numero intervalli
+  var i,j,x;
+
+  var M = $('input:radio[name=L]:checked').val();
+
+
+  var PM = Math.pow(2,M);
+  var maskM = PM - 1;
+
+
+
+  for (x=0; x< PM; x++) {
+    distr[x] = 0;
+    first[x] = 0;
+    interval[x] = 0;
+    ninterval[x] = 0;
+  }
+
+  for (j=0; j<K; j++) {
+    for (x=0; x< PM; x++) {
+      last[x] = -1;
+    }
+    x = 0;
+    for (i=0; i < M-1; i++) {
+      x = x * 2 + (Math.random() < .5); // costruzione stringa casuale. Inizio con M-1 siti..
+    }
+    for (i=0; i<N-M; i++) {
+      x = (x * 2 + (Math.random() < .5)) & maskM; // ...e continuo:
+                                         // x ="finestra" larga M
+      if (last[x] < 0) {                 // prima volta che la vedo
+        first[x] += i;
+        last[x] = i;
+      } else {
+        interval[x] += i-last[x];
+        last[x] = i;
+        ninterval[x]++;
+      }
+      distr [x] ++;// calcolo la distribuzione
+    }
+    for (x=0; x< PM; x++) {
+      if (last[x] < 0 ){
+        $("#results").append("non ho mai visto "+x+"<br />");
+      }
+    }
+  }
+
+  // stampa distribuzione e tempo prima apparizione
+
+  var str="";
+  str +="<table id='tab'><tr><th>Sequenza</th><th>Probabilit&agrave;</th><th>"+
+    "Tempo medio prima apparizione</th><th>Intervallo medio</th></tr>";
+
+  for (x=0; x< PM; x++) {
+    $("#results").append("<tr>");
+
+    str +="<td>"+x+"(";
+    for (i=0; i<M; i++) {
+       str+= (x>>(M-i-1)) & 1;
+    }
+    str+=")</td><td>"+(distr[x]/N/K).toPrecision(4)+"</td><td>"+
+       (first[x]/K).toPrecision(3)+"</td><td>"+
+       (interval[x]/ninterval[x]).toPrecision(4)+"</td></tr>"
+  }
+  str+="</table>";
+  $("#results").append(str);
+}
+
+</script>
+</head>
+<body>
+
+<div id="game">
+
+<div id="container">
+
+
+ <div id="controls">
+   <form>
+   <fieldset>
+   Lunghezza stringa<br />
+     <table>
+       <tr><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+       <tr>
+ <td><input type="radio" name="L" value="2" /> </td>
+<td><input type="radio" name="L" value="3" checked /></td>
+<td><input type="radio" name="L" value="4" /></td>
+<td><input type="radio" name="L" value="5" /></td>
+<td><input type="radio" name="L" value="6" /></td>
+ </tr>
+ </table>
+  Lunghezza: <select id="N">
+   <option value="1000">1000</option>
+   <option value="2000">2000</option>
+   <option value="4000">4000</option>
+   <option value="8000">8000</option>
+   </select>
+   <br />
+ Ripetizioni: <select id="K">
+   <option value="1000">1000</option>
+   <option value="2000">2000</option>
+   <option value="4000">4000</option>
+   <option value="8000">8000</option>
+   </select>
+ </fieldset>
+ <input type="button" value = "vai" onclick="vai()"/>
+ </form>
+</div>
+
+<div id="results">
+ risultati
+ </div> <br />
+
+</div>
+
+</body>
+</html>
