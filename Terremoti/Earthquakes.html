@@ -79944,6 +79944,7 @@ globals [
   customcolor
   customfriction
   customstiffness
+  clicked?
 ]
 
 wavers-own [
@@ -79968,7 +79969,6 @@ turtles-own [
 
 to setup ; set upm the model
   clear-all
-  setup-nettango
   set map-edge-x max-pxcor ;floor (max-pxcor / 8)
   set map-edge-y max-pycor ;floor (max-pycor / 8)
   set-default-shape turtles "circle"
@@ -80005,7 +80005,9 @@ to setup ; set upm the model
     set neighbor-turtles wavers-on neighbors4
     set type-of-rock "Normal"
   ]
-  ;change-color-of-wavers
+  set quake-amplitude 14
+  set quake-frequency 80
+  set clicked? false
   reset-ticks
 end
 
@@ -80025,99 +80027,140 @@ end
 ;;  a period of time. This extends the duration of shaking. Due to their size, these deep geologic structures can
 ;;  influence shaking over a wide area.
 
-to setup-sedimentary-rock
-  ask patch  mouse-xcor mouse-ycor [
-    ask wavers-here [
-      set type-of-rock "Sedimentary"
-      set pcolor blue + 3
-      set agent-friction 15
-      set agent-stiffness 43  ]
-  ]
-end
 
-to setup-metamorphic-rock
-  ask patch  mouse-xcor mouse-ycor [
-    ask wavers-here [
-      set type-of-rock "Metamorphic"
-      set pcolor gray + 3
-      set agent-friction 100
-      set agent-stiffness 0
+
+to sedimentary-rock
+  if mouse-down? [
+    set clicked? true
+    ask patch  mouse-xcor mouse-ycor [
+      ask wavers-here [
+        set type-of-rock "Sedimentary"
+        set pcolor blue + 3
+        set agent-friction 15
+        set agent-stiffness 43  ]
     ]
+    tick
+  ]
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
   ]
 end
 
-to setup-igneous-rock
-  ask patch mouse-xcor mouse-ycor [
-    ask wavers-here [
-      set type-of-rock "Igneous"
-      set pcolor red + 3
-      set agent-friction 50
-      set agent-stiffness 0
+to metamorphic-rock
+  if mouse-down? [
+    set clicked? true
+    ask patch  mouse-xcor mouse-ycor [
+      ask wavers-here [
+        set type-of-rock "Metamorphic"
+        set pcolor gray + 3
+        set agent-friction 100
+        set agent-stiffness 0
+      ]
     ]
+    tick
+  ]
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
   ]
 end
 
-to setup-normal-rock
-  ask patch  mouse-xcor mouse-ycor [
-    ask wavers-here [
-      set type-of-rock "Normal"
-      set pcolor black
-      set agent-friction friction
-      set agent-stiffness stiffness
+to igneous-rock
+  if mouse-down? [
+    set clicked? true
+    ask patch mouse-xcor mouse-ycor [
+      ask wavers-here [
+        set type-of-rock "Igneous"
+        set pcolor red + 3
+        set agent-friction 50
+        set agent-stiffness 0
+      ]
     ]
+    tick
+  ]
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
+  ]
+end
+
+to normal-rock
+  if mouse-down? [
+    set clicked? true
+    ask patch  mouse-xcor mouse-ycor [
+      ask wavers-here [
+        set type-of-rock "Normal"
+        set pcolor black
+        set agent-friction friction
+        set agent-stiffness stiffness
+      ]
+    ]
+    tick
+  ]
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
   ]
 end
 
 
-to setup-fault
-  ask patch  mouse-xcor mouse-ycor [
-    set pcolor orange
-   ]
+to fault
+  if mouse-down? [
+    set clicked? true
+    ask patch  mouse-xcor mouse-ycor [
+      set pcolor orange
+    ]
+    tick
+  ]
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
+  ]
 end
 
 to move-seismograph
   if mouse-down? [
+    set clicked? true
     ask one-of seismographs [
       setxy mouse-xcor mouse-ycor
+      show "ci sono"
     ]
+  ]
+  tick
+  if clicked? and not mouse-down? [
+    set clicked? false
+    stop
   ]
 end
 
-to setground
-    (ifelse add = "Sedimentary rock" [
-      setup-sedimentary-rock
-      ]
-      add = "Metamorphic rock" [
-        setup-metamorphic-rock
-      ]
-      add = "Igneous rock" [
-        setup-igneous-rock
-      ]
-      add = "Fault" [
-        setup-fault
-      ][ ; Normal
-        setup-normal-rock
-    ])
-end
+;to setground
+;    (ifelse add = "Sedimentary rock" [
+;      setup-sedimentary-rock
+;      ]
+;      add = "Metamorphic rock" [
+;        setup-metamorphic-rock
+;      ]
+;      add = "Igneous rock" [
+;        setup-igneous-rock
+;      ]
+;      add = "Fault" [
+;        setup-fault
+;      ][ ; Normal
+;        setup-normal-rock
+;    ])
+;end
 
 to go
-  go-nettango
-  ;ask wavers with [not driver? and not edge?]
-   ; [ propagate ]
-  ask wavers[
+  ask wavers with [not driver? and not edge?] [
+    propagate
+  ]
+  ask wavers [
     ifelse driver? [
       set z (quake-amplitude * (sin (0.1 * quake-frequency * ticks)))
     ][
       set z (z + velocity)
       recolor
-    ]
-  ]
-  ;change-color-of-wavers
-  if mouse-down? [
-    ifelse move-seismometer? [
-      move-seismograph
-    ][
-      setground
     ]
   ]
   tick
@@ -80164,29 +80207,6 @@ end
 
 
 
-; Copyright 2020 Kit Martin.
-
-; --- NETTANGO BEGIN ---
-
-; This block of code was added by the NetTango Web Builder.  If you modify this code
-; and re-import it into the NetTango Web Builder you may lose your changes or need
-; to resolve some errors manually.
-
-; If you do not plan to re-import the model into the NetTango Web Builder then you
-; can safely edit this code however you want, just like a normal NetLogo model.
-
-to go-nettango
-  ask wavers with [not driver? and not edge?]
-  [
-    propagate
-  ]
-end
-
-to setup-nettango
-  set quake-amplitude 14
-  set quake-frequency 80
-end
-
 to quake
   earthquake 4
 end
@@ -80220,10 +80240,10 @@ days
 30.0
 
 BUTTON
-39
-27
-117
-60
+40
+15
+118
+48
 NIL
 setup
 NIL
@@ -80237,10 +80257,10 @@ NIL
 1
 
 BUTTON
-119
-27
-196
-60
+125
+15
+202
+48
 go/pause
 go
 T
@@ -80254,10 +80274,10 @@ NIL
 0
 
 BUTTON
-38
-302
-168
-336
+35
+440
+200
+474
 stop all earthquakes
 stopearthquakes
 NIL
@@ -80268,7 +80288,7 @@ NIL
 NIL
 NIL
 NIL
-1
+0
 
 PLOT
 630
@@ -80307,10 +80327,10 @@ PENS
 "default" 1.0 0 -13290229 true "" "plot seismograph-status"
 
 BUTTON
-43
-242
-169
-286
+35
+405
+200
+438
 start an earthquake
 quake
 NIL
@@ -80321,23 +80341,13 @@ NIL
 NIL
 NIL
 NIL
-1
-
-CHOOSER
-23
-178
-184
-223
-Add
-Add
-"Fault" "Normal rock" "Metamorphic rock" "Igneous rock" "Sedimentary rock"
 0
 
 BUTTON
-29
-355
-202
-388
+35
+485
+200
+518
 clear seismograph plot
 set-current-plot \"Seismograph\"\nclear-plot
 NIL
@@ -80350,36 +80360,117 @@ NIL
 NIL
 1
 
-SWITCH
-25
-137
-207
-170
-move-seismometer?
-move-seismometer?
-1
-1
--1000
-
 TEXTBOX
-52
-92
-202
-134
-click to move seismometerh (or to place rocks if unselected)
-11
-0.0
-1
-
-TEXTBOX
-24
-403
-222
-515
+30
+65
+228
+177
 Type of rock      friction     stiffness\n----------------------------\n   Normal                1               12\n Metamorphic      100              0\n   Igneous              50               0\n Sedimentary        15              43
 11
 0.0
 1
+
+BUTTON
+35
+355
+200
+388
+NIL
+move-seismograph
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+BUTTON
+35
+275
+200
+308
+NIL
+sedimentary-rock
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+BUTTON
+34
+155
+199
+188
+NIL
+normal-rock
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+BUTTON
+35
+195
+200
+228
+NIL
+metamorphic-rock
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+BUTTON
+35
+235
+200
+268
+NIL
+igneous-rock
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
+
+BUTTON
+35
+315
+200
+348
+NIL
+fault
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+0
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -80863,7 +80954,7 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 @#$#@#$#@
-0
+1
 @#$#@#$#@
 </script>
     
